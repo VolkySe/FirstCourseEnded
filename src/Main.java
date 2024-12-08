@@ -23,11 +23,19 @@ public class Main {
     public static void main(String[] args) {
         initEmployers();
         outputEmployers();
+        System.out.println("calculateSumOfSalaries() = " + calculateSumOfSalaries());
     }
 
     public static void outputEmployers() {
         for (Employeer employeer : EMPLOYEER) {
             System.out.println(employeer);
         }
+    }
+
+    public static int calculateSumOfSalaries() {
+        int sum = 0;
+        for (Employeer employeer: EMPLOYEER)
+            sum += employeer.getSalary();
+        return sum;
     }
 }
