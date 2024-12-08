@@ -22,20 +22,55 @@ public class Main {
 
     public static void main(String[] args) {
         initEmployers();
-        outputEmployers();
-        System.out.println("calculateSumOfSalaries() = " + calculateSumOfSalaries());
+        outputEmployersInfo();
+        System.out.println("Сумма затрат на зарплату в месяц = " + calculateSumOfSalaries());
+        System.out.println("Сотрудник с минимальной зарплатой = " + findEmployeerWithMinSalary());
+        System.out.println("Сотрудник с максимальной зарплатой = " + findEmployeerWithMaxSalary());
+        System.out.println("Средняя зарплата сотрудника = " + calculateAverageSalary());
+        System.out.println("Список сотрудников: ");
+        outputEmployersFullNames();
+
     }
 
-    public static void outputEmployers() {
+    private static void outputEmployersInfo() {
         for (Employeer employeer : EMPLOYEER) {
             System.out.println(employeer);
         }
     }
+    private static void outputEmployersFullNames() {
+        for (Employeer employeer : EMPLOYEER) {
+            System.out.println(employeer.getFULLNAME());
+        }
+    }
 
-    public static int calculateSumOfSalaries() {
+    private static int calculateSumOfSalaries() {
         int sum = 0;
-        for (Employeer employeer: EMPLOYEER)
+        for (Employeer employeer : EMPLOYEER)
             sum += employeer.getSalary();
         return sum;
     }
+
+    private static double calculateAverageSalary() {
+        return (double) calculateSumOfSalaries() / EMPLOYEER.length;
+    }
+
+    private static Employeer findEmployeerWithMinSalary() {
+        Employeer employeerWithMinSalary = null;
+        for (Employeer employeer : EMPLOYEER)
+            if (employeerWithMinSalary == null || employeer.getSalary() < employeerWithMinSalary.getSalary()) {
+                employeerWithMinSalary = employeer;
+            }
+        return employeerWithMinSalary;
+    }
+
+    private static Employeer findEmployeerWithMaxSalary() {
+        Employeer employeerWithMaxSalary = null;
+        for (Employeer employeer : EMPLOYEER)
+            if (employeerWithMaxSalary == null || employeer.getSalary() > employeerWithMaxSalary.getSalary()) {
+                employeerWithMaxSalary = employeer;
+            }
+        return employeerWithMaxSalary;
+    }
+
+
 }
