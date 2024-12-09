@@ -45,6 +45,11 @@ public class Employeer {
                 ", department=" + department +
                 ", salary=" + salary;
     }
+    public String toString(int inDepartment) {
+        return "ID=" + ID +
+                ", FULLNAME='" + FULLNAME + '\'' +
+                ", salary=" + salary;
+    }
 }
 
 

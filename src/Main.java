@@ -9,12 +9,7 @@ public class Main {
 
     private static void initEmployers() {
         for (int i = 0; i < EMPLOYEER.length; i++) {
-            EMPLOYEER[i] = new Employeer(
-                    SURNAMES[RANDOM.nextInt(0, SURNAMES.length)],
-                    NAMES[RANDOM.nextInt(0, NAMES.length)],
-                    PATRONYMIC[RANDOM.nextInt(0, PATRONYMIC.length)],
-                    RANDOM.nextInt(1, 6),
-                    RANDOM.nextInt(100_000, 500_000));
+            EMPLOYEER[i] = new Employeer(SURNAMES[RANDOM.nextInt(0, SURNAMES.length)], NAMES[RANDOM.nextInt(0, NAMES.length)], PATRONYMIC[RANDOM.nextInt(0, PATRONYMIC.length)], RANDOM.nextInt(1, 6), RANDOM.nextInt(100_000, 500_000));
         }
     }
 
@@ -35,16 +30,28 @@ public class Main {
         indexingSalary(indexingPercent);
         int inDepartment = 2;
         outputEmployersInfo();
+
         System.out.println("В отделе " + inDepartment + " сотрудник с минимальной зарплатой = " + findEmployeerWithMinSalary(inDepartment));
         System.out.println("В отделе " + inDepartment + " сотрудник с максимальной зарплатой = " + findEmployeerWithMaxSalary(inDepartment));
         System.out.println("В отделе " + inDepartment + " сумма затрат на зарплату в месяц = " + calculateSumOfSalaries(inDepartment));
         System.out.println("В отделе " + inDepartment + " средняя зарплата сотрудника = " + calculateAverageSalary(inDepartment));
+        indexingSalary(indexingPercent, inDepartment);
+        outputEmployersInfo(inDepartment);
     }
 
     private static void outputEmployersInfo() {
         System.out.println("Список сотрудников: ");
         for (Employeer employeer : EMPLOYEER) {
             System.out.println(employeer);
+        }
+    }
+
+    private static void outputEmployersInfo(int inDepartment) {
+        System.out.println("Список сотрудников в отделе: " + inDepartment + " :");
+        for (Employeer employeer : EMPLOYEER) {
+            if (employeer.getDepartment() == inDepartment) {
+                System.out.println(employeer.toString(inDepartment));
+            }
         }
     }
 
@@ -77,11 +84,12 @@ public class Main {
     private static int countPersons(int inDepartmnet) {
         int count = 0;
         for (Employeer employeer : EMPLOYEER)
-            if (employeer.getDepartment() ==inDepartmnet) {
+            if (employeer.getDepartment() == inDepartmnet) {
                 count += 1;
             }
         return count;
     }
+
     private static double calculateAverageSalary(int inDepartment) {
         return (double) calculateSumOfSalaries(inDepartment) / countPersons(inDepartment);
     }
@@ -127,6 +135,16 @@ public class Main {
         for (Employeer employeer : EMPLOYEER) {
             employeer.setSalary((int) (employeer.getSalary() * (indexingPercent / 100 + 1)));
         }
+    }
+
+    private static void indexingSalary(float indexingPercent, int inDepartment) {
+
+        for (Employeer employeer : EMPLOYEER) {
+            if (employeer.getDepartment() == inDepartment) {
+                employeer.setSalary((int) (employeer.getSalary() * (indexingPercent / 100 + 1)));
+            }
+        }
+        outputEmployersInfo();
     }
 
 }
