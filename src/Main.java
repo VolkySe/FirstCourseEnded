@@ -20,6 +20,7 @@ public class Main {
 
     private final static Employeer[] EMPLOYEER = new Employeer[10];
 
+
     public static void main(String[] args) {
         initEmployers();
         outputEmployersInfo();
@@ -30,13 +31,23 @@ public class Main {
         System.out.println("Список сотрудников: ");
         outputEmployersFullNames();
 
+        float indexingPercent = 10.f;
+        indexingSalary(indexingPercent);
+        int inDepartment = 2;
+        outputEmployersInfo();
+        System.out.println("В отделе " + inDepartment + " сотрудник с минимальной зарплатой = " + findEmployeerWithMinSalary(inDepartment));
+        System.out.println("В отделе " + inDepartment + " сотрудник с максимальной зарплатой = " + findEmployeerWithMaxSalary(inDepartment));
+        System.out.println("В отделе " + inDepartment + " сумма затрат на зарплату в месяц = " + calculateSumOfSalaries(inDepartment));
+        System.out.println("В отделе " + inDepartment + " средняя зарплата сотрудника = " + calculateAverageSalary(inDepartment));
     }
 
     private static void outputEmployersInfo() {
+        System.out.println("Список сотрудников: ");
         for (Employeer employeer : EMPLOYEER) {
             System.out.println(employeer);
         }
     }
+
     private static void outputEmployersFullNames() {
         for (Employeer employeer : EMPLOYEER) {
             System.out.println(employeer.getFULLNAME());
@@ -50,14 +61,44 @@ public class Main {
         return sum;
     }
 
+    private static int calculateSumOfSalaries(int inDepartment) {
+        int sum = 0;
+        for (Employeer employeer : EMPLOYEER)
+            if (employeer.getDepartment() == inDepartment) {
+                sum += employeer.getSalary();
+            }
+        return sum;
+    }
+
     private static double calculateAverageSalary() {
         return (double) calculateSumOfSalaries() / EMPLOYEER.length;
+    }
+
+    private static int countPersons(int inDepartmnet) {
+        int count = 0;
+        for (Employeer employeer : EMPLOYEER)
+            if (employeer.getDepartment() ==inDepartmnet) {
+                count += 1;
+            }
+        return count;
+    }
+    private static double calculateAverageSalary(int inDepartment) {
+        return (double) calculateSumOfSalaries(inDepartment) / countPersons(inDepartment);
     }
 
     private static Employeer findEmployeerWithMinSalary() {
         Employeer employeerWithMinSalary = null;
         for (Employeer employeer : EMPLOYEER)
             if (employeerWithMinSalary == null || employeer.getSalary() < employeerWithMinSalary.getSalary()) {
+                employeerWithMinSalary = employeer;
+            }
+        return employeerWithMinSalary;
+    }
+
+    private static Employeer findEmployeerWithMinSalary(int inDepartment) {
+        Employeer employeerWithMinSalary = null;
+        for (Employeer employeer : EMPLOYEER)
+            if ((employeerWithMinSalary == null || employeer.getSalary() < employeerWithMinSalary.getSalary()) && inDepartment == employeer.getDepartment()) {
                 employeerWithMinSalary = employeer;
             }
         return employeerWithMinSalary;
@@ -72,5 +113,20 @@ public class Main {
         return employeerWithMaxSalary;
     }
 
+    private static Employeer findEmployeerWithMaxSalary(int inDepartment) {
+        Employeer employeerWithMaxSalary = null;
+        for (Employeer employeer : EMPLOYEER)
+            if ((employeerWithMaxSalary == null || employeer.getSalary() > employeerWithMaxSalary.getSalary()) && inDepartment == employeer.getDepartment()) {
+                employeerWithMaxSalary = employeer;
+            }
+        return employeerWithMaxSalary;
+    }
+
+    private static void indexingSalary(float indexingPercent) {
+
+        for (Employeer employeer : EMPLOYEER) {
+            employeer.setSalary((int) (employeer.getSalary() * (indexingPercent / 100 + 1)));
+        }
+    }
 
 }
