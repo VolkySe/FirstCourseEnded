@@ -9,7 +9,11 @@ public class Main {
 
     private static void initEmployers() {
         for (int i = 0; i < EMPLOYEER.length; i++) {
-            EMPLOYEER[i] = new Employeer(SURNAMES[RANDOM.nextInt(0, SURNAMES.length)], NAMES[RANDOM.nextInt(0, NAMES.length)], PATRONYMIC[RANDOM.nextInt(0, PATRONYMIC.length)], RANDOM.nextInt(1, 6), RANDOM.nextInt(100_000, 500_000));
+            EMPLOYEER[i] = new Employeer(SURNAMES[RANDOM.nextInt(0, SURNAMES.length)],
+                    NAMES[RANDOM.nextInt(0, NAMES.length)],
+                    PATRONYMIC[RANDOM.nextInt(0, PATRONYMIC.length)],
+                    RANDOM.nextInt(1, 6),
+                    RANDOM.nextInt(100_000, 500_000));
         }
     }
 
@@ -37,6 +41,10 @@ public class Main {
         System.out.println("В отделе " + inDepartment + " средняя зарплата сотрудника = " + calculateAverageSalary(inDepartment));
         indexingSalary(indexingPercent, inDepartment);
         outputEmployersInfo(inDepartment);
+
+        int checkSalary = 207_000;
+        outputEmployeerLessCheckSalary(checkSalary);
+        outputEmployeerMoreCheckSalary(checkSalary);
     }
 
     private static void outputEmployersInfo() {
@@ -122,12 +130,30 @@ public class Main {
     }
 
     private static Employeer findEmployeerWithMaxSalary(int inDepartment) {
-        Employeer employeerWithMaxSalary = null;
+        Employeer employeerWithMinSalary = null;
         for (Employeer employeer : EMPLOYEER)
-            if ((employeerWithMaxSalary == null || employeer.getSalary() > employeerWithMaxSalary.getSalary()) && inDepartment == employeer.getDepartment()) {
-                employeerWithMaxSalary = employeer;
+            if ((employeerWithMinSalary == null || employeer.getSalary() > employeerWithMinSalary.getSalary()) && inDepartment == employeer.getDepartment()) {
+                employeerWithMinSalary = employeer;
             }
-        return employeerWithMaxSalary;
+        return employeerWithMinSalary;
+    }
+
+    private static void outputEmployeerLessCheckSalary(int checkSalary) {
+        System.out.println("Сотрудники с зарплатой меньше, чем " + checkSalary);
+        for (Employeer employeer : EMPLOYEER) {
+            employeer.toString(0);
+            if (employeer.getSalary() < checkSalary) {
+                System.out.println(employeer.toString(0));
+            }
+        }
+    }
+
+    private static void outputEmployeerMoreCheckSalary(int checkSalary) {
+        System.out.println("Сотрудники с зарплатой больше, чем " + checkSalary + " или равной");
+        for (Employeer employeer : EMPLOYEER)
+            if (employeer.getSalary() >= checkSalary) {
+                System.out.println(employeer.toString(0));
+            }
     }
 
     private static void indexingSalary(float indexingPercent) {
