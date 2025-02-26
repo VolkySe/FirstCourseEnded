@@ -158,11 +158,11 @@ class EmployeeBook {
 
     void fireEmployee(int employeeID) {
         //проверить на null id, как себя поведет int
-        EMPLOYEER[employeeID-1] = null;
+        EMPLOYEER[employeeID - 1] = null;
         outputEmployersInfo();
     }
 
     Employeer findEmployee(int employeeID) {
-        return EMPLOYEER[employeeID-1];
+        return EMPLOYEER[employeeID - 1];
     }
 }
